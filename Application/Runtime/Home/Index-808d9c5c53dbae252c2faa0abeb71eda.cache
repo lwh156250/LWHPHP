@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>layout-示例</title>
+</head>
+<body>
+<h1>Hello,World!</h1>
+<div>Index/index :　<?php echo $msg;?></div>
+<div>Welcome to LWHPHP!</div>
+</body>
+</html>
