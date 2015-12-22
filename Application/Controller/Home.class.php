@@ -7,8 +7,8 @@ class Home extends \Core\Controller{
 	}
 
 	public function index(){
-		var_dump($a);
 		//获取参数param1，默认为false，数据类型强制转换为string类型
+		if($a) {echo 111;}
 		$param1 = I('param1', false, 'string');
 		if($param1) p($param1);									//打印变量内容
 		// $result = D('Test')->getAll('select * from test');	//数据库查询

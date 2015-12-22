@@ -104,7 +104,7 @@ class View{
             $layoutFile     =   $this->parseLayout();
             $templateFile   =   $this->parseTemplate($templateFile);
             // 模板文件不存在直接返回
-            if(!is_file($templateFile)) die("$templateFile is not existent");
+            if(!is_file($templateFile)) halt("TemplateFile: $templateFile is not existent");
             $tmplContent = file_get_contents($templateFile);
 
             //开启layout
@@ -222,7 +222,7 @@ class View{
             $layoutFile = $layoutFile . C('TMPL_TEMPLATE_SUFFIX');
         }
         $file   =   APP_PATH. 'View/Layout/' . $layoutFile;
-        is_file($file) or die("Layout file $file is not existent!");
+        is_file($file) or halt("Layout File: $file is not existent!");
         return $file;
     }
 

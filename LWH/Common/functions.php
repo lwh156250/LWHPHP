@@ -286,3 +286,57 @@ function session($name='',$value='') {
         }
     }
 }
+
+function logWrite($log,$destination='') {
+    $now = date('c');
+    $destination = BASE_PATH . APP_NAME .'/Runtime/Log/'. (empty($destination) ?  date('y_m_d') . '.log' : $destination);
+    //检测日志文件大小，超过配置大小则备份日志文件重新生成
+    if(is_file($destination) && 2097152 <= filesize($destination) )
+        rename($destination,dirname($destination).'/'.time().'-'.basename($destination));
+    
+    \Core\Storage::append($destination,"[{$now}] ".$_SERVER['REMOTE_ADDR'].' '.$_SERVER['REQUEST_URI']."\r\n{$log}\r\n");
+    // error_log("[{$now}] ".$_SERVER['REMOTE_ADDR'].' '.$_SERVER['REQUEST_URI']."\r\n{$log}\r\n", 3,$destination);
+}
+
+
+/**
+ * 错误输出
+ * @param mixed $error 错误
+ * @return void
+ */
+function halt($error) {
+    $e = array();
+    if (APP_DEBUG) {//APP_DEBUG || IS_CLI
+        //调试模式下输出错误信息
+        if (!is_array($error)) {
+            $trace          = debug_backtrace();
+            $e['message']   = $error;
+            $e['file']      = $trace[0]['file'];
+            $e['line']      = $trace[0]['line'];
+            ob_start();
+            debug_print_backtrace();
+            $e['trace']     = ob_get_clean();
+        } else {
+            $e              = $error;
+        }
+        //兼容php其他运行模式
+        // if(IS_CLI){
+        //     exit(iconv('UTF-8','gbk',$e['message']).PHP_EOL.'FILE: '.$e['file'].'('.$e['line'].')'.PHP_EOL.$e['trace']);
+        // }
+    } else {
+        //否则定向到错误页面
+        $error_page         = C('ERROR_PAGE');
+        if (!empty($error_page)) {
+            include($error_page);
+          exit;
+        } else {
+            $message        = is_array($error) ? $error['message'] : $error;
+            $e['message']   = C('SHOW_ERROR_MSG')? $message : C('ERROR_MESSAGE');
+        }
+    }
+    logWrite($e['message'] . $e['file'] . $e['file'] . $e['line']);
+    // 包含异常页面模板
+    $exceptionFile =  LWH_PATH.'View/lwh_exception.html';
+    include $exceptionFile;
+    exit;
+}

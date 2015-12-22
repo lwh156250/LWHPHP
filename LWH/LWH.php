@@ -6,14 +6,14 @@
 // +----------------------------------------------------------------------
 
 //版本信息
-const LWH_VERSION = '1.0.0';
+const LWH_VERSION = '1.0.1';
 
 //类文件后缀
 const EXT = '.class.php';
 const CONF_EXT = '.php';
 
 //系统常量定义
-// defined('BASE_PATH') 	or define('BASE_PATH', 		dirname(__DIR__));
+defined('BASE_PATH') 	or define('BASE_PATH', 		dirname(__DIR__) . '/');
 defined('LWH_PATH')		or define('LWH_PATH',		__DIR__.'/');
 defined('APP_PATH')     or define('APP_PATH',       './Application/');
 defined('APP_NAME')		or define('APP_NAME',		trim(APP_PATH, './'));
