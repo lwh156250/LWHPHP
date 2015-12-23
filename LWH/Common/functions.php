@@ -334,7 +334,7 @@ function halt($error) {
             $e['message']   = C('SHOW_ERROR_MSG')? $message : C('ERROR_MESSAGE');
         }
     }
-    logWrite($e['message'] . $e['file'] . $e['file'] . $e['line']);
+    logWrite($e['message'] . "\n\r" . $e['file'] ."\n\r"  . $e['line'] . "\n\r" );
     // 包含异常页面模板
     $exceptionFile =  LWH_PATH.'View/lwh_exception.html';
     include $exceptionFile;

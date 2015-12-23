@@ -150,7 +150,7 @@ abstract class Controller extends \Core\Response{
      * @return mixed
      */
     public function __call($method,$args) {
-        die("Action $method is not existent!");
+        halt("Action $method is not existent!");
         if( 0 === strcasecmp($method,ACTION_NAME.C('ACTION_SUFFIX'))) {
             if(method_exists($this,'_empty')) {
                 // 如果定义了_empty操作 则调用
