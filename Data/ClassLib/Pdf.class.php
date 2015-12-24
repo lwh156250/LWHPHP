@@ -8,11 +8,11 @@ class Pdf{
 	public function __construct($config = array()){
 		// $config = array(
 		// 	'info' => array(
-		// 		'Creator' => '',
-		// 		'Author' => '',
-		// 		'Title' => '',
-		// 		'Subject' => '',
-		// 		'Keywords' => '',
+		// 		'creator' => '',
+		// 		'author' => '',
+		// 		'title' => '',
+		// 		'subject' => '',
+		// 		'keywords' => '',
 		// 	),	
 		// 	'header' => array(
 		// 		'imgUrl' => '',
@@ -31,10 +31,20 @@ class Pdf{
 		$this->init($config);
 	}
 
+	/**
+	 * 将html转化为pdf
+	 * @param string $html [description]
+	 */
 	public function setHtmlBody($html=''){
 		$this->pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 	}
 
+	/**
+	 * 将pdf在浏览器上展示，后进行下载
+	 * @param  string $name   文件名字
+	 * @param  string $action 'I'展示在浏览器上，'D'直接下载
+	 * @return [type]         [description]
+	 */
 	public function build($name='example.pdf', $action = 'I'){
 		$this->pdf->Output($name, $action);
 	}
@@ -44,11 +54,11 @@ class Pdf{
 		$this->pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 		//设置文档信息
-		$this->pdf->SetCreator(isset($config['info']['Creator']) ? $config['info']['Creator'] : 'LWHPHP');
-		$this->pdf->SetAuthor(isset($config['info']['Author']) ? $config['info']['Author'] : 'LWH');
-		$this->pdf->SetTitle(isset($config['info']['Title']) ? $config['info']['Title'] : 'LWH TCPDF TEST');
-		$this->pdf->SetSubject(isset($config['info']['Subject']) ? $config['info']['Subject'] : 'TCPDF CLASS');
-		$this->pdf->SetKeywords(isset($config['info']['Keywords']) ? $config['info']['Keywords'] : 'TCPDF, PDF');
+		$this->pdf->SetCreator(isset($config['info']['creator']) ? $config['info']['creator'] : 'LWHPHP');
+		$this->pdf->SetAuthor(isset($config['info']['author']) ? $config['info']['author'] : 'LWH');
+		$this->pdf->SetTitle(isset($config['info']['title']) ? $config['info']['title'] : 'LWH TCPDF TEST');
+		$this->pdf->SetSubject(isset($config['info']['subject']) ? $config['info']['subject'] : 'TCPDF CLASS');
+		$this->pdf->SetKeywords(isset($config['info']['keywords']) ? $config['info']['keywords'] : 'TCPDF, PDF');
 
 		//设置页眉页脚
 		$this->pdf->SetHeaderData(
